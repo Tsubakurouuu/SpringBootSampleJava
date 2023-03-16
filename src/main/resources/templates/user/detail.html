@@ -26,17 +26,19 @@
 						 </tr>
 						 <tr>
 							 <th>ユーザー名</th>
-							 <td><input type="text" class="form-control" th:field="*{userName}"/></td>
+							 <td>
+								 <input type="text" class="form-control" th:field="*{userName}"/>
+							 </td>
 						 </tr>
-						 <t>
+						 <tr>
 							 <th>誕生日</th>
-							 <td th:text="*{#dates.format(birthday, 'YYYY/ MM/ dd')}"></td>
+							 <td></td>
 						 </tr>
 						 <tr>
 							 <th>年齢</th>
 							 <td th:text="*{age}"></td>
 						 </tr>
-						 <t>
+						 <tr>
 							 <th>性別</th>
 							 <t th:text="*{gender == 1 ? '男性': '女性'}"></td>
 						 </tr>
