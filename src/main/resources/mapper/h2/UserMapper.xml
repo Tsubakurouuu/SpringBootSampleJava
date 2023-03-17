@@ -12,6 +12,12 @@
 	<result column="gender" property="gender"/>
 	<result column="department_id" property="departmentId"/>
 	<result column="role" property ="role"/>
+	<association property="department" resultMap="department"/>
+</resultMap>
+<!--マッピング定義（部署）-->
+<resultMap type="com.example.domain.user.model.Department" id="department">
+	<id column="department_id" property="departmentId"/>
+	<result column="department_name" property="departmentName"/>
 </resultMap>
 
 	<!--ユーザー1件登録-->
@@ -39,7 +45,15 @@
 	
 	<!--ユーザー複数件取得 -->
 	<select id="findMany" resultType="MUser">
-		select * from m_user
+		select * from m_user left join m_department on m_user.department_id = m_department.department_id
+		<where>
+			<if test="userId != null">
+				user_id like '%' || #{userId} || '%'
+			</if>
+			<if test="userName != null">
+				and user_name like '%' || #{userName} || '%'
+			</if>
+		</where>
 	</select>
 	<!--ユーザー１件取得-->
 	<select id="findOne" resultMap="user">
