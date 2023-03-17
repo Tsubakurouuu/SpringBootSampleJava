@@ -22,14 +22,28 @@ public class UserServiceImpl implements UserService {
 		user.setRole("ROLE_GENERAL");//ロール
 		mapper.insertOne(user);
 	}
-
+	
+	/*ユーザー取得*/
 	@Override
 	public List<MUser> getUsers() {
 		return mapper.findMany();
 	}
-
+	
+	/*ユーザー１件取得*/
 	@Override
 	public MUser getUserOne(String userId) {
 		return mapper.findOne(userId);
+	}
+	
+	/*ユーザー１件更新*/
+	@Override
+	public void updateUserOne(String userId, String password, String userName) {
+		mapper.updateOne(userId, password, userName);
+	}
+	
+	/*ユーザー１件削除*/
+	@Override
+	public void deleteUserOne(String userId) {
+		int count = mapper.deleteOne(userId);
 	}
 }

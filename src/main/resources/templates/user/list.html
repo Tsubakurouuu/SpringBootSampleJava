@@ -27,7 +27,7 @@
 						<tr th:each="item : ${userList}">
 							<td th:text="${item.userId}"></td>
 							<td th:text="${item.userName}"></td>
-							<td></td >
+							<td th:text="${#dates.format(item.birthday,'YYYY/MM/dd')}"></td >
 							<td th:text="${item.age}"></td>
 							<td th:text="${item.gender==1}?'男性':'女性'"></td>
 							<td>
