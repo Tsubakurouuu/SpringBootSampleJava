@@ -1,5 +1,10 @@
 package com.example.domain.user.model;
 
-public class Salary {
+import lombok.Data;
 
+@Data
+public class Salary {
+	private String userId;
+	private String yearmonth;
+	private Integer salary;
 }
