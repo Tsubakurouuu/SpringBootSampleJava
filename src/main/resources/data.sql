@@ -23,7 +23,6 @@ INSERT INTO m_department(
 (1, 'システム管理部'),
 (2, '営業部');
 
-/*給料テーブル*/
 INSERT INTO t_salary(
     user_id,
     year_month,

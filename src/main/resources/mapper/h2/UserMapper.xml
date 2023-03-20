@@ -63,23 +63,23 @@
 	</select>
 	<!--ユーザー１件取得-->
 	<select id="findOne" resultMap="user">
-		 select
-			m_user.user_id,
-		    m_user.password,
-		    m_user.user_name,
-		    m_user.birthday,
-		    m_user.age,
-		    m_user.gender,
-		    m_department.department_id,
-		    m_department.department_name,
-		    t_salary.user_id as salary_user_id,
-		    t_salary.year_month as salary_year_month,
-		    t_salary.salary as salary_salary
-		 from m_user
-		 	left join m_department on m_user.department_id = m_department.department_id
-		 	left join salary on m_user.user_id = t_salary.user_id
-		 where
-		 	m_user.user_id = #{userId}
+		select
+		m_user.user_id,
+		m_user.password,
+		m_user.user_name,
+		m_user.birthday,
+		m_user.age,
+		m_user.gender,
+		m_department.department_id,
+		m_department.department_name,
+		t_salary.user_id as salary_user_id,
+		t_salary.year_month as salary_year_month,
+		t_salary.salary as salary_salary
+		from m_user
+		left join m_department on m_user.department_id = m_department.department_id
+		left join t_salary on m_user.user_id = t_salary.user_id
+		where
+		m_user.user_id = #{userId}
 	</select>
 	<!--ユーザー１件更新-->
 	<update id="updateOne">

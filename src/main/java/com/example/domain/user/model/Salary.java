@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Salary {
 	private String userId;
-	private String yearmonth;
+	private String yearMonth;
 	private Integer salary;
 }
