@@ -80,7 +80,6 @@ public class SignupController {
 		model.addAttribute("error", "");
 		
 		//メッセージをModelに登録
-		
 		model.addAttribute("message", "SignupControllerで例外が発生しました");
 		
 		//HTTPのエラーコード（500）をModelに登録
