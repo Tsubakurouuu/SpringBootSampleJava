@@ -7,9 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -41,6 +39,7 @@ public class SecurityConfig {
                 .permitAll() // "/css/**"などはログインなしでもアクセス可能
                 .requestMatchers("/login").permitAll() //直リンクOK
                 .requestMatchers("/user/signup").permitAll() //直リンクOK
+//                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated() //それ以外は直リンクNG
         );
         
@@ -51,19 +50,11 @@ public class SecurityConfig {
     }
     
     @Bean
-    public UserDetailsService userDetailsService() {
-    	UserBuilder users = User.withDefaultPasswordEncoder();
-    	UserDetails user = users
-    		.username("user")
-    		.password("user")
-    		.roles("GENERAL")
-    		.build();
-    	UserDetails admin = users
-    		.username("admin")
-    		.password("admin")
-    		.roles("ADMIN")
-    		.build();
-    	return new InMemoryUserDetailsManager(user, admin);
+    public InMemoryUserDetailsManager userDetailsService() {
+        PasswordEncoder encoder = passwordEncoder();
+        UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("GENERAL").build();
+        UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build();
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 }
