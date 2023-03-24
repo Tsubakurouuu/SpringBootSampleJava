@@ -19,5 +19,7 @@ public interface UserService {
 	/*ユーザー１件更新*/
 	public void updateUserOne(String userId, String password, String userName);
 	
+	/*ユーザー１件削除*/
 	public void deleteUserOne(String userId);
+	
 }
