@@ -118,10 +118,15 @@
 			<version>1.10.21</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!--JPA-->
+		<!--SpringSecurity-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!--Thyemeleaf拡張ライブラリ（ セキュリティ） -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 	</dependencies>
 
