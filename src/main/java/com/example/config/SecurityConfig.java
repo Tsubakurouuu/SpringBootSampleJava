@@ -1,15 +1,16 @@
 package com.example.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
@@ -53,15 +54,28 @@ public class SecurityConfig {
         
         //CSRF対策を無効に設定(一時的)
         http.csrf().disable();
+        
         return http.build();
     }
     
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-    	//インメモリ認証
-        PasswordEncoder encoder = passwordEncoder();
-        UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("GENERAL").build(); //userを追加
-        UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build(); //adminを追加
-        return new InMemoryUserDetailsManager(user, admin);
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//    	//インメモリ認証
+//        PasswordEncoder encoder = passwordEncoder();
+//        UserDetails user = User.withUsername("user").password(encoder.encode("user")).roles("GENERAL").build(); //userを追加
+//        UserDetails admin = User.withUsername("admin").password(encoder.encode("admin")).roles("ADMIN").build(); //adminを追加
+//        return new InMemoryUserDetailsManager(user, admin);
+//    }
+    
+    //ユーザーデータで認証
+    public UserDetailsManager users(DataSource dataSource) {
+        String userQuery =
+                "select user_id as username,password,true as enabled from m_user where user_id = ?";
+        String authoritiesQuery =
+                "select user_id,role from m_user where user_id = ?";
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+        users.setUsersByUsernameQuery(userQuery);
+        users.setAuthoritiesByUsernameQuery(authoritiesQuery);
+        return users;
     }
 }
